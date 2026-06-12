@@ -63,6 +63,11 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
     datefmt="%H:%M:%S",
 )
+# httpx логирует полный URL запроса вместе с токеном бота — глушим до WARNING,
+# чтобы токен не утекал в логи. apscheduler приглушаем от шума.
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("httpcore").setLevel(logging.WARNING)
+logging.getLogger("apscheduler").setLevel(logging.WARNING)
 logger = logging.getLogger("cve_bot")
 
 # Время последнего сканирования
